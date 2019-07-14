@@ -1,0 +1,23 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: <%= ENV.fetch('DB_HOST', 'db') %>
+  username: root
+  password:
+  port: 3306
+  timeout: 5000
+  charset: utf8
+  collation: utf8_unicode_ci
+
+development:
+  <<: *default
+  database: todo-api_development
+
+test:
+  <<: *default
+  database: todo-api_test
+
+production:
+  <<: *default
+  database: todo-api_test

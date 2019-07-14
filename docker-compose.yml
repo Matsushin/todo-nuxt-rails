@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:5.7.22
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - "4306:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./todo-api/mysqlconf:/etc/mysql/conf.d
+  api:
+    build: todo-api
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 8080 -b '0.0.0.0'"
+    volumes:
+      - ./todo-api:/todo-api
+      - bundle:/bundle
+    ports:
+      - "8080:8080"
+    links:
+      - db
+    env_file: ./todo-api/.env.development
+    tty: true
+    stdin_open: true
+#  web:
+#    build: todo
+#    tty: true
+#    command: sh -c "npm run dev"
+#    volumes:
+#      - ./todo:/todo
+#    ports:
+#      - "3000:3000"
+#    environment:
+#      - HOST=0.0.0.0
+#      - API_URL=http://api:8080
+#      - API_URL_BROWSER=http://localhost:8080
+#    links:
+#      - api
+volumes:
+  db-data:
+    driver: local
+  bundle:
+    driver: local
