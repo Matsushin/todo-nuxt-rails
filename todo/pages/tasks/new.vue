@@ -1,80 +1,47 @@
 <template>
-  <div class="main-contents">
-    <div class="contents-servey-create">
-      <Errors :errors="errors"/>
+  <div class="new-task-container">
+    <Errors :errors="errors"/>
 
-      <h1>アンケート新規登録</h1>
-      <div class="button-page-back-wrapper">
-        <router-link
-          to="/tasks"
-          class="btn btn-page-back">
-          アンケート一覧へ戻る
-        </router-link>
-      </div>
+    <h2>タスク新規登録</h2>
+    <div class="button-page-back-wrapper">
+      <router-link
+        to="/tasks"
+        class="btn btn-page-back">
+        タスク一覧へ戻る
+      </router-link>
+    </div>
 
-      <form @submit.prevent="handleSubmit">
-        <div class="box-wrapper">
-          <div class="box">
-            <h2 class="contract-date">
-              <span>契約終了日：</span>
-              {{ ymd(currentUser.organization.contract_end_at) }}
-            </h2>
-
-            <div class="panel panel-input-list">
-              <ul class="input-list">
-                <li>
-                  <label>
-                    アンケート名
-                  </label>
-                  <input
-                    v-model="formData.name"
-                    type="text"
-                    placeholder="営業部 2019年 2月上旬 - 3月下旬"
-                    required
-                    class="task-name"
-                  >
-                </li>
-                <li>
-                  <label>
-                    回答開始日
-                  </label>
-                  <el-date-picker
-                    ref="scheduledAtDay"
-                    :picker-options="datePickerOptions"
-                    v-model="formData.start_at"
-                    :required="true"
-                    type="date"
-                    value-format="yyyy-MM-dd"
-                    format="yyyy-MM-dd"/>
-                </li>
-                <li>
-                  <label>
-                    回答終了日
-                  </label>
-                  <el-date-picker
-                    ref="scheduledAtDay"
-                    :picker-options="datePickerOptions"
-                    v-model="formData.end_at"
-                    :required="true"
-                    type="date"
-                    value-format="yyyy-MM-dd"
-                    format="yyyy-MM-dd"/>
-                </li>
-              </ul>
-            </div>
+    <form @submit.prevent="handleSubmit" class="el-form">
+      <div class="box-wrapper">
+        <div class="box">
+          <div class="panel panel-input-list">
+            <label class="el-form-item__label">タイトル</label>
+            <el-input
+              v-model="formData.title"
+              type="text"
+              required
+              class="task-title"
+              placeholder="ここにタスクのタイトルが入ります" />
+            <label class="el-form-item__label">本文</label>
+            <el-input
+              v-model="formData.body"
+              type="textarea"
+              required
+              class="task-body"
+              placeholder="ここにタスク内容が入ります" />
           </div>
         </div>
+      </div>
 
-        <div class="text-center mt-32">
-          <submit-button
-            type="submit"
-            class="btn">
-            この内容で登録する
-          </submit-button>
-        </div>
-      </form>
-
-    </div>
+      <div class="mt-8">
+        <el-button
+          type="primary"
+          native-type="submit"
+        >
+          この内容で登録する
+        </el-button>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -88,13 +55,6 @@
     },
     asyncData() {
       return {
-        datePickerOptions: {
-          disabledDate(date) {
-            let now = new Date()
-            now.setHours(0, 0, 0, 0)
-            return date <= now
-          }
-        },
         formData: {},
         errors: []
       }
@@ -107,9 +67,8 @@
     methods: {
       async handleSubmit() {
         const params = {
-          name: this.formData.name,
-          start_at: this.formData.start_at,
-          end_at: this.formData.end_at
+          title: this.formData.title,
+          body: this.formData.body
         }
         await this.createtask(params)
       },

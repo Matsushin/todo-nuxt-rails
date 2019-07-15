@@ -29,13 +29,17 @@
           <div v-if="currentUser">
             <aside class="el-aside side-nav">
               <ul role="menu" class="el-menu">
-                <li role="menuitem" class="el-menu-item">
+                <li
+                  role="menuitem"
+                  :class="'el-menu-item ' + activeClass('/dashboard')">
                   <router-link to="/dashboard">
                     <i class="el-icon-user"></i>
                     マイページ
                   </router-link>
                 </li>
-                <li role="menuitem" class="el-menu-item">
+                <li
+                  role="menuitem"
+                  :class="'el-menu-item ' + activeClass('/tasks')">
                   <router-link to="/tasks">
                     <i class="el-icon-edit"></i>
                     タスク一覧
@@ -59,21 +63,6 @@
   </div>
 </template>
 
-<style>
-.el-header {
-  color: #409eff;
-  border-bottom: 1px solid #dcdfe6;
-}
-
-.header-logo {
-  font-weight: bold;
-  font-size: 1.2em;
-}
-.el-aside {
-  color: #333;
-}
-</style>
-
 <script>
   import LogoutButton from '~/components/LogoutButton.vue'
   import { mapGetters } from 'vuex'
@@ -88,6 +77,11 @@
       }),
       hasCookiesToken: function() {
         return !!this.$cookies.get('token') && !!this.currentUser
+      }
+    },
+    methods: {
+      activeClass(path) {
+        return this.$route.path == path ? 'active' : ''
       }
     }
   }

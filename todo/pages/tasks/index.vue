@@ -1,11 +1,13 @@
 <template>
   <div>
     <h2>タスク一覧</h2>
-    <nuxt-link
-      to="/tasks/new"
-      class="btn btn-create">
-      タスク新規登録
-    </nuxt-link>
+    <el-link type="primary">
+      <nuxt-link
+        to="/tasks/new"
+        class="btn btn-create">
+        タスク新規登録
+      </nuxt-link>
+    </el-link>
     <div>
       <TaskIndex />
     </div>

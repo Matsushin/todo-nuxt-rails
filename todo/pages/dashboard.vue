@@ -1,7 +1,7 @@
 <template>
   <section class="container">
     <div>
-      <h2>ダッシュボード</h2>
+      <h2>マイページ</h2>
     </div>
   </section>
 </template>

@@ -10,10 +10,18 @@ h2 {
 }
 
 .side-nav {
+  color: #333;
   border-right: solid 1px #e6e6e6;
+  height: 100%;
 
   a {
     text-decoration: none;
+  }
+
+  .active {
+    a, i {
+      color: #409eff !important;
+    }
   }
 
   a:hover {
