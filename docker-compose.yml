@@ -23,20 +23,20 @@ services:
     env_file: ./todo-api/.env.development
     tty: true
     stdin_open: true
-#  web:
-#    build: todo
-#    tty: true
-#    command: sh -c "npm run dev"
-#    volumes:
-#      - ./todo:/todo
-#    ports:
-#      - "3000:3000"
-#    environment:
-#      - HOST=0.0.0.0
-#      - API_URL=http://api:8080
-#      - API_URL_BROWSER=http://localhost:8080
-#    links:
-#      - api
+  web:
+    build: todo
+    tty: true
+    command: sh -c "npm run dev"
+    volumes:
+      - ./todo:/todo
+    ports:
+      - "3000:3000"
+    environment:
+      - HOST=0.0.0.0
+      - API_URL=http://api:8080
+      - API_URL_BROWSER=http://localhost:8080
+    links:
+      - api
 volumes:
   db-data:
     driver: local
