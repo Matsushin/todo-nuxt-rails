@@ -1,7 +1,6 @@
 <template>
-  <submit-button
-    class="btn btn-logout"
-    @click="logout">ログアウト</submit-button>
+  <el-button
+    @click="logout">ログアウト</el-button>
 </template>
 
 <script>

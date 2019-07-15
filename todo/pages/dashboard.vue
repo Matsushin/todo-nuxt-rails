@@ -1,9 +1,7 @@
 <template>
   <section class="container">
     <div>
-      <h1 class="title">
-        タスク一覧
-      </h1>
+      <h2>ダッシュボード</h2>
     </div>
   </section>
 </template>

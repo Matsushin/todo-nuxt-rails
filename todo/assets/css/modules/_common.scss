@@ -1,0 +1,34 @@
+body {
+  margin: 0;
+}
+
+h2 {
+  font-weight: 400;
+  color: #1f2f3d;
+  font-size: 28px;
+  margin: 0;
+}
+
+.side-nav {
+  border-right: solid 1px #e6e6e6;
+
+  a {
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: #409eff;
+  }
+
+  a:visited {
+    color: #444;
+  }
+
+  ul.el-menu {
+    border: none;
+  }
+}
+
+.mt-8 {
+  margin-top: 8px;
+}

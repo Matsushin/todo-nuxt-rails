@@ -1,50 +1,48 @@
 <template>
-  <div class="panel w-544">
+  <div class="sign_in-container">
     <div
       v-if="$route.query.m"
       style="white-space: pre-line;"
-      class="notice error mb-32">
+      class="notice error">
       <p>{{ $route.query.m }}</p>
     </div>
     <h2>ログイン</h2>
 
     <Errors :errors="errors" />
 
-    <form @submit.prevent="login">
-      <div class="mt-24">
-        <label>メールアドレス</label>
-        <input
+    <form @submit.prevent="login" class="el-form">
+      <div class="el-form-item">
+        <label class="el-form-item__label">メールアドレス</label>
+        <el-input
           v-model="formData.email"
           type="text"
-          placeholder="ログインID" >
+          placeholder="ログインID" />
       </div>
-      <div class="mt-24">
-        <label>パスワード</label>
-        <input
+      <div class="el-form-item">
+        <label class="el-form-item__label">パスワード</label>
+        <el-input
           v-model="formData.password"
           type="password"
-          placeholder="パスワード" >
+          placeholder="パスワード"
+          show-password />
       </div>
-      <div class="text-center mt-48">
+      <div>
         <button
           type="submit"
-          class="btn">
+          class="el-button el-button--primary">
           ログイン
         </button>
       </div>
     </form>
 
-    <div class="confirm-checkbox mt-32">
-      <input
-        id="idSaving_checkbox"
+    <div class="mt-8">
+      <el-checkbox
         v-model="idSaving"
         type="checkbox"
-        @change="clearStrageId" >
-      <label for="idSaving_checkbox">
-        メールアドレスを保存する
-        (共有パソコンからログインする場合はチェックを外してください)
-      </label>
-
+        @change="clearStrageId"
+      >
+        メールアドレスを保存する (共有パソコンからログインする場合はチェックを外してください)
+      </el-checkbox>
     </div>
   </div>
 </template>

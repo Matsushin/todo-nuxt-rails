@@ -55,10 +55,22 @@ export default {
     ['@nuxtjs/moment', ['ja']],
     ['cookie-universal-nuxt', { parseJSON: false }]
   ],
+  /*
+  ** Axios module configuration
+  */
+  axios: {
+    // See https://github.com/nuxt-community/axios-module#options
+    host: 'localhost',
+    port: '8080'
+  },
 
   toast: {
     position: 'top-center',
     duration: 3000
+  },
+
+  env: {
+
   },
 
   router: {
