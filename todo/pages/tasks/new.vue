@@ -3,14 +3,13 @@
     <Errors :errors="errors"/>
 
     <h2>タスク新規登録</h2>
-    <div class="button-page-back-wrapper">
-      <router-link
+    <el-link type="primary">
+      <nuxt-link
         to="/tasks"
         class="btn btn-page-back">
         タスク一覧へ戻る
-      </router-link>
-    </div>
-
+      </nuxt-link>
+    </el-link>
     <form @submit.prevent="handleSubmit" class="el-form">
       <div class="box-wrapper">
         <div class="box">

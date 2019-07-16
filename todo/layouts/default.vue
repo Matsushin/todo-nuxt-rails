@@ -81,7 +81,7 @@
     },
     methods: {
       activeClass(path) {
-        return this.$route.path == path ? 'active' : ''
+        return this.$route.path.match(path) ? 'active' : ''
       }
     }
   }
