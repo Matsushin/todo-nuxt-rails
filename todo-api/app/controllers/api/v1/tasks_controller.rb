@@ -15,6 +15,27 @@ class Api::V1::TasksController < Api::V1::ApplicationController
     end
   end
 
+  def update
+    task = Task.find(params[:id])
+    outcome = Task::Update.run(task_params.merge(task: task))
+
+    if outcome.valid?
+      render json: outcome.result
+    else
+      render json: { errors: outcome.errors.full_messages }
+    end
+  end
+
+  def destroy
+    task = Task.find(params[:id])
+    outcome = Task::Delete.run(task: task)
+    if outcome.valid?
+      render json: outcome.result
+    else
+      render json: { errors: outcome.errors.full_messages, status: :unprocessable_entity }
+    end
+  end
+
   private
 
   def task_params

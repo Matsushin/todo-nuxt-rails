@@ -1,9 +1,9 @@
 <template>
-  <div class="box">
+  <div>
     <el-table
       :data="tasks"
       stripe
-      style="width:100%">
+      style="width: 100%">
       <el-table-column
         prop="title"
         label="タスク名"
@@ -26,18 +26,21 @@
         label="完了日時"
         width="240">
       </el-table-column>
-      <el-table-column
-        width="120"
-        >
+      <el-table-column>
         <template slot-scope="scope">
-          <el-button @click="handleClick" type="text">詳細</el-button>
-          <el-button type="text">編集</el-button>
           <el-button type="text">
             <router-link
               :to="{ name: 'tasks-id', params: { id: scope.row.id.toString() }}"
-              class="btn btn-task-list-link">
-              詳細設定
+              class="btn btn-task-list-link"
+            >
+              編集
             </router-link>
+          </el-button>
+          <el-button
+            type="text"
+            @click="handleDeleteTask(scope.row.id)"
+          >
+            削除
           </el-button>
         </template>
       </el-table-column>
@@ -60,13 +63,25 @@ export default {
     formattedDate(str) {
       return this.$moment(str).format('YYYY年MM月DD日HH:mm:ss')
     },
-    handleClick() {
-      console.log('click')
+    handleDeleteTask(id) {
+      if (confirm('タスクを削除しますか？')) {
+        this.deleteTask(id)
+      }
     },
     async fetchtasks() {
       let res = await this.$axios.$get('/api/v1/tasks')
       this.tasks = res
-    }
+    },
+    async deleteTask(id) {
+      const endpoint = '/api/v1/tasks/' + id
+      const res = await this.$axios.$delete(endpoint)
+      if (res.errors) {
+        this.errors = res.errors
+      } else {
+        this.fetchtasks()
+        this.$toast.info('タスクを削除しました。')
+      }
+    },
   }
 }
 </script>
