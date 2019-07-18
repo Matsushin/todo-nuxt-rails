@@ -1,4 +1,5 @@
 class Api::V1::ApplicationController < ApplicationController
+  include Pundit
   include Rails::Pagination
 
   protect_from_forgery with: :null_session

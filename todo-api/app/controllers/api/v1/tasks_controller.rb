@@ -1,4 +1,5 @@
 class Api::V1::TasksController < Api::V1::ApplicationController
+  before_action :set_task, only: %i[update show destroy]
 
   def index
     tasks = current_user.tasks
@@ -6,6 +7,7 @@ class Api::V1::TasksController < Api::V1::ApplicationController
   end
 
   def create
+    authorize Task
     outcome = Task::Create.run(task_params.merge(user: current_user))
 
     if outcome.valid?
@@ -16,8 +18,8 @@ class Api::V1::TasksController < Api::V1::ApplicationController
   end
 
   def update
-    task = Task.find(params[:id])
-    outcome = Task::Update.run(task_params.merge(task: task))
+    authorize @task
+    outcome = Task::Update.run(task_params.merge(task: @task))
 
     if outcome.valid?
       render json: outcome.result
@@ -27,13 +29,14 @@ class Api::V1::TasksController < Api::V1::ApplicationController
   end
 
   def show
-    task = Task.find(params[:id])
-    render json: task.to_json
+    authorize @task
+
+    render json: @task.to_json
   end
 
   def destroy
-    task = Task.find(params[:id])
-    outcome = Task::Delete.run(task: task)
+    authorize @task
+    outcome = Task::Delete.run(task: @task)
     if outcome.valid?
       render json: outcome.result
     else
@@ -42,6 +45,10 @@ class Api::V1::TasksController < Api::V1::ApplicationController
   end
 
   private
+
+  def set_task
+    @task = Task.find(params[:id])
+  end
 
   def task_params
     { title: params[:title], body: params[:body] }
