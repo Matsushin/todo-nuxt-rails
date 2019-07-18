@@ -3,12 +3,8 @@
     <Errors :errors="errors"/>
 
     <h2>タスク新規登録</h2>
-    <el-link type="primary">
-      <nuxt-link
-        to="/tasks"
-        class="btn btn-page-back">
-        タスク一覧へ戻る
-      </nuxt-link>
+    <el-link type="primary" href="/tasks">
+      タスク一覧へ戻る
     </el-link>
     <form @submit.prevent="handleSubmit" class="el-form">
       <div class="box-wrapper">
@@ -60,7 +56,8 @@
     },
     computed: {
       ...mapGetters({
-        currentUser: 'auth/currentUser'
+        currentUser: 'auth/currentUser',
+        survey: 'tasks/task'
       })
     },
     methods: {

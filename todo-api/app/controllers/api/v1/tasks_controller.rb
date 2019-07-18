@@ -26,6 +26,11 @@ class Api::V1::TasksController < Api::V1::ApplicationController
     end
   end
 
+  def show
+    task = Task.find(params[:id])
+    render json: task.to_json
+  end
+
   def destroy
     task = Task.find(params[:id])
     outcome = Task::Delete.run(task: task)

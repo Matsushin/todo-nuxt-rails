@@ -22,19 +22,19 @@
         </template>
       </el-table-column>
       <el-table-column
-        prop="completed_at"
         label="完了日時"
         width="240">
+        <template slot-scope="scope">
+          <span style="margin-left: 10px">{{ formattedDate(scope.row.completed_at) }}</span>
+        </template>
       </el-table-column>
       <el-table-column>
         <template slot-scope="scope">
-          <el-button type="text">
-            <router-link
-              :to="{ name: 'tasks-id', params: { id: scope.row.id.toString() }}"
-              class="btn btn-task-list-link"
-            >
-              編集
-            </router-link>
+          <el-button
+            type="text"
+            @click="edit(scope.row.id)"
+          >
+            編集
           </el-button>
           <el-button
             type="text"
@@ -57,18 +57,29 @@ export default {
     }
   },
   created() {
-    this.fetchtasks()
+    this.fetchTasks()
   },
   methods: {
     formattedDate(str) {
+      if (!str) {
+        return
+      }
       return this.$moment(str).format('YYYY年MM月DD日HH:mm:ss')
+    },
+    edit(id) {
+      this.$router.push({
+        name: 'tasks-id-edit',
+        params: {
+          id: id
+        }
+      })
     },
     handleDeleteTask(id) {
       if (confirm('タスクを削除しますか？')) {
         this.deleteTask(id)
       }
     },
-    async fetchtasks() {
+    async fetchTasks() {
       let res = await this.$axios.$get('/api/v1/tasks')
       this.tasks = res
     },
@@ -78,7 +89,7 @@ export default {
       if (res.errors) {
         this.errors = res.errors
       } else {
-        this.fetchtasks()
+        this.fetchTasks()
         this.$toast.info('タスクを削除しました。')
       }
     },
