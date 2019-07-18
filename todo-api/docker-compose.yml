@@ -19,7 +19,6 @@ services:
       - "8080:8080"
     links:
       - db
-    env_file: .env.development
     tty: true
     stdin_open: true
 volumes:
