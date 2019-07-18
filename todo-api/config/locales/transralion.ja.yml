@@ -1,0 +1,19 @@
+ja:
+  activerecord:
+    attributes:
+      user: &user
+        username: ユーザ名
+        password: パスワード
+        email: メールアドレス
+      task: &task
+        title: タイトル
+        body: 本文
+
+  active_interaction:
+    attributes:
+      user/sign_in:
+        <<: *user
+      task/create:
+        <<: *task
+      task/update:
+        <<: *task
