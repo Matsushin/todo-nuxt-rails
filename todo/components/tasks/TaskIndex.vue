@@ -1,9 +1,10 @@
 <template>
-  <div>
+  <div class="task-table">
     <el-table
       :data="tasks"
       stripe
-      style="width: 100%">
+      style="width: 100%"
+      :row-class-name="tableRowClassName">
       <el-table-column
         prop="title"
         label="タスク名"
@@ -47,6 +48,7 @@
     </el-table>
   </div>
 </template>
+
 <script>
 import { mapGetters } from 'vuex'
 
@@ -60,6 +62,12 @@ export default {
     this.fetchTasks()
   },
   methods: {
+    tableRowClassName({row, _rowIndex}) {
+      if (row.completed_at) {
+        return 'success-row';
+      }
+      return '';
+    },
     formattedDate(str) {
       if (!str) {
         return

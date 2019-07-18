@@ -2,7 +2,7 @@ class Api::V1::TasksController < Api::V1::ApplicationController
   before_action :set_task, only: %i[update show destroy]
 
   def index
-    tasks = current_user.tasks
+    tasks = current_user.tasks.order(:created_at)
     render json: tasks.to_json
   end
 
