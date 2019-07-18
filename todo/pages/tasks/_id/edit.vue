@@ -43,47 +43,48 @@
   import { mapGetters } from 'vuex'
   import Errors from '@/components/shared/Errors'
 
-  export default {
-    components: {
-      Errors
+export default {
+  components: {
+    Errors
+  },
+  data() {
+    return {
+      formData: {},
+      errors: []
+    }
+  },
+  computed: {
+    ...mapGetters({
+      currentUser: 'auth/currentUser',
+      task: 'tasks/task'
+    })
+  },
+  created() {
+    this.formData = { ...this.task }
+  },
+  async fetch({ store, params, redirect }) {
+    await store.dispatch('tasks/fetchTask', params.id)
+  },
+  methods: {
+    async handleSubmit() {
+      const params = {
+        title: this.formData.title,
+        body: this.formData.body
+      }
+      await this.updateTask(this.task, params)
     },
-    data() {
-      return {
-        formData: {},
-        errors: []
+    async updateTask(task, params) {
+      const endpoint = `/api/v1/tasks/${task.id}`
+      const res = await this.$axios.$patch(endpoint, params)
+
+      if (res.errors) {
+        this.errors = res.errors
+      } else {
+        this.$store.dispatch('tasks/fetchTask', task.id)
+        this.$router.push('/tasks')
+        this.$toast.info('タスクを変更しました。')
       }
     },
-    computed: {
-      ...mapGetters({
-        currentUser: 'auth/currentUser',
-        task: 'tasks/task'
-      })
-    },
-    created() {
-      this.$store.dispatch('tasks/fetchTask', this.$route.params.id)
-      this.formData = { ...this.task }
-    },
-    methods: {
-      async handleSubmit() {
-        const params = {
-          title: this.formData.title,
-          body: this.formData.body
-        }
-        await this.updateTask(this.task, params)
-      },
-      async updateTask(task, params) {
-        console.log(task)
-        const endpoint = `/api/v1/tasks/${task.id}`
-        const res = await this.$axios.$patch(endpoint, params)
-
-        if (res.errors) {
-          this.errors = res.errors
-        } else {
-          this.$store.dispatch('tasks/fetchTask', task.id)
-          this.$router.push('/tasks')
-          this.$toast.info('タスクを変更しました。')
-        }
-      },
-    }
   }
+}
 </script>
