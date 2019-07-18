@@ -2,8 +2,10 @@
 - Nuxt.js x Railsのサンプルアプリです。RailsはAPIとして利用しています。
 - ログイン後にタスク一覧/登録/編集/削除のみできます。
 
-## 利用している技術
+### Version
+- Ruby v2.6.3
 - Rails v5.2.3
+- MySQL 5.7.22
 - Nuxt.js v2.4.0
 
 ### アプリ初期設定
@@ -21,7 +23,10 @@ $ make init
 $ make up
 ```
 
-## 確認
+### 確認
 
 - フロント側：http://localhost:3000/
 - RailsAdmin：http://localhost:8080/admin
+
+### 終了
+Ctrl+C
