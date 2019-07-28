@@ -26,3 +26,8 @@
 .DS_Store
 
 /vendor/bundle
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
