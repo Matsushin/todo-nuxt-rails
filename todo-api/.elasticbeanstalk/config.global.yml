@@ -1,7 +1,6 @@
 branch-defaults:
   elastic-beanstalk:
-    environment: null
-    group_suffix: null
+    environment: todo-nuxt-rails-dev
 global:
   application_name: todo-nuxt-rails
   branch: null
