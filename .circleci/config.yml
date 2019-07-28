@@ -1,18 +1,5 @@
 version: 2
 jobs:
-  test-front:
-    docker:
-      - image: circleci/node:10.16.0-stretch
-    steps:
-      - checkout
-      - run:
-          name: install-npm
-          command: npm install
-          working_directory: ~/project/todo
-      - run:
-          name: test
-          command: npm run test
-          working_directory: ~/project/todo
   build:
     machine:
       image: circleci/classic:edge
@@ -40,7 +27,10 @@ jobs:
           working_directory: todo-api
       - run:
           name: bundle install
-          command: docker-compose run web bundle install
+          command: |
+            docker-compose run web bundle update --bundler
+            docker-compose run web gem install bundler:2.0.2
+            docker-compose run web bundle install
           working_directory: todo-api
       - run:
           name: setup db
@@ -66,9 +56,3 @@ jobs:
                             --out /tmp/test-results/rspec.xml \
                             --format progress \
           working_directory: todo-api
-workflows:
-  version: 2
-  build_and_deploy:
-    jobs:
-      - test-front
-      - build
