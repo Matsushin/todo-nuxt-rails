@@ -1,0 +1,78 @@
+version: 2
+jobs:
+  test-front:
+    docker:
+      - image: circleci/node:10.16.0-stretch
+    steps:
+      - checkout
+      - run:
+          name: install-npm
+          command: npm install
+          working_directory: ~/project/todo
+      - run:
+          name: lint
+          command: npm run lint
+          working_directory: ~/project/todo
+      - run:
+          name: test
+          command: npm run test
+          working_directory: ~/project/todo
+  build:
+    machine:
+      image: circleci/classic:edge
+    steps:
+      - checkout
+      - run:
+          name: Install Docker Compose
+          command: |
+            curl -L https://github.com/docker/compose/releases/download/1.20.1/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      - restore_cache:
+          key: docker-{{ .Branch }}-{{ checksum "todo-api/docker-compose.yml" }}-{{ checksum "todo-api/Dockerfile" }}
+          paths: ~/caches/images.tar
+      - run:
+          name: setting
+          command: |
+            cp .env.development.sample .env.development
+            set +o pipefail
+            docker load -i ~/caches/images.tar | true
+          working_directory: todo-api
+      - run:
+          name: build
+          command: docker-compose build
+          working_directory: todo-api
+      - run:
+          name: bundle install
+          command: docker-compose run web bundle install
+          working_directory: todo-api
+      - run:
+          name: setup db
+          command: docker-compose run web bundle exec rails db:create db:migrate
+          working_directory: todo-api
+      - run:
+          name: cache image
+          command: |
+            mkdir -p ~/caches
+            docker save $(docker images -q) -o ~/caches/images.tar
+          working_directory: todo-api
+      - save_cache:
+          key: docker-{{ .Branch }}-{{ checksum "todo-api/docker-compose.yml" }}-{{ checksum "todo-api/Dockerfile" }}
+          paths: ~/caches/images.tar
+      - run:
+          name: run tests
+          command: |
+            mkdir /tmp/test-results
+            docker-compose run web \
+            bundle exec rspec --profile 10 \
+                            --format progress \
+                            --format RspecJunitFormatter \
+                            --out /tmp/test-results/rspec.xml \
+                            --format progress \
+          working_directory: todo-api
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - test-front
+      - build
