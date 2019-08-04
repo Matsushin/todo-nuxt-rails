@@ -3,7 +3,7 @@ class Task::Create < ApplicationService
   string :title, default: nil
   string :body, default: nil
 
-  validates :user, :title, :body, presence: true
+  validates :user, presence: true
 
   def execute
     record = Task.new(inputs)

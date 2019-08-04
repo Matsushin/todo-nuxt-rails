@@ -35,6 +35,8 @@ module TodoApi
     # Don't generate system test files.
     config.generators.system_tests = nil
 
+    config.logger = Logger.new(ENV.fetch('LOG_PATH', '/var/log/api/app.log'), 90, 50 * 1024 * 1024)
+
     config.x.cors_allowed_origins = ENV.fetch('CORS_ALLOWED_ORIGINS', '*')
   end
 end

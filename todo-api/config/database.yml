@@ -10,6 +10,13 @@ default: &default
   charset: utf8
   collation: utf8_unicode_ci
 
+rds: &rds
+  database: <%= ENV['RDS_DB_NAME'] %>
+  username: <%= ENV['RDS_USERNAME'] %>
+  password: <%= ENV['RDS_PASSWORD'] %>
+  host: <%= ENV['RDS_HOSTNAME'] %>
+  port: <%= ENV['RDS_PORT'] %>
+
 development:
   <<: *default
   database: todo-api_development
@@ -20,4 +27,4 @@ test:
 
 production:
   <<: *default
-  database: todo-api_test
+  <<: *rds

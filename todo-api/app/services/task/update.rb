@@ -4,8 +4,6 @@ class Task::Update < ApplicationService
   string :title, default: nil
   string :body, default: nil
 
-  validates :title, :body, presence: true
-
   def execute
     task.title = title
     task.body = body

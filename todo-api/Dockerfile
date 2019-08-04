@@ -33,6 +33,7 @@ RUN gem update
 
 ENV APP_HOME /todo-api
 RUN mkdir $APP_HOME
+RUN mkdir /var/log/api
 WORKDIR $APP_HOME
 
 ENV GEM_HOME=/bundle

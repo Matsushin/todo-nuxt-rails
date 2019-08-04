@@ -1,0 +1,84 @@
+version: 2
+jobs:
+  build:
+    machine:
+      image: circleci/classic:edge
+    steps:
+      - checkout
+      - run:
+          name: Install Docker Compose
+          command: |
+            curl -L https://github.com/docker/compose/releases/download/1.20.1/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      - restore_cache:
+          key: docker-{{ .Branch }}-{{ checksum "todo-api/docker-compose.yml" }}-{{ checksum "todo-api/Dockerfile" }}
+          paths: ~/caches/images.tar
+      - run:
+          name: setting
+          command: |
+            cp .env.development.sample .env.development
+            set +o pipefail
+            docker load -i ~/caches/images.tar | true
+          working_directory: todo-api
+      - run:
+          name: build
+          command: docker-compose build
+          working_directory: todo-api
+      - run:
+          name: bundle install
+          command: |
+            docker-compose run web bundle install
+          working_directory: todo-api
+      - run:
+          name: setup db
+          command: docker-compose run web bundle exec rails db:create db:migrate
+          working_directory: todo-api
+      - run:
+          name: cache image
+          command: |
+            mkdir -p ~/caches
+            docker save $(docker images -q) -o ~/caches/images.tar
+          working_directory: todo-api
+      - save_cache:
+          key: docker-{{ .Branch }}-{{ checksum "todo-api/docker-compose.yml" }}-{{ checksum "todo-api/Dockerfile" }}
+          paths: ~/caches/images.tar
+      - run:
+          name: run tests
+          command: |
+            mkdir /tmp/test-results
+            docker-compose run web \
+            bundle exec rspec --profile 10 \
+                            --format progress \
+                            --format RspecJunitFormatter \
+                            --out /tmp/test-results/rspec.xml \
+                            --format progress \
+          working_directory: todo-api
+  deploy:
+    machine:
+      image: circleci/classic:edge
+    steps:
+      - checkout
+      - run:
+          name: Installing deployment dependencies
+          working_directory: /
+          command: |
+            sudo apt-get -y -qq update
+            sudo apt-get install python-pip python-dev build-essential
+            pip install --upgrade pip
+            pip install pyYAML==3.13 six==1.11.0 requests==2.20.1 urllib3==1.24.1 awsebcli --upgrade
+      - run:
+          name: Deploying to Backend
+          command: eb deploy todo-nuxt-rails-dev --timeout 20
+          working_directory: todo-api
+          no_output_timeout: 20m
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build
+      - deploy:
+          filters:
+            branches:
+              only:
+                - master
