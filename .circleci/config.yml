@@ -72,6 +72,16 @@ jobs:
           command: eb deploy todo-nuxt-rails-dev --timeout 20
           working_directory: todo-api
           no_output_timeout: 20m
+      - run:
+          name: Deploying to Frontend
+          command: eb deploy todo-nuxt-rails-dev-front --timeout 20
+          working_directory: todo
+          no_output_timeout: 20m
+      - run:
+          name: Deploying to Worker
+          command: eb deploy todo-nuxt-rails-worker --timeout 20
+          working_directory: todo-api
+          no_output_timeout: 20m
 workflows:
   version: 2
   build_and_deploy:
