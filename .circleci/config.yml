@@ -54,3 +54,30 @@ jobs:
                             --out /tmp/test-results/rspec.xml \
                             --format progress \
           working_directory: todo-api
+  deploy:
+    machine:
+      image: circleci/classic:edge
+    steps:
+      - checkout
+      - run:
+          name: Installing deployment dependencies
+          working_directory: /
+          command: |
+            sudo apt-get -y -qq update
+            sudo apt-get install python-pip python-dev build-essential
+            pip install --upgrade pip
+            pip install pyYAML==3.13 six==1.11.0 requests==2.20.1 urllib3==1.24.1 awsebcli --upgrade
+      - run:
+          name: Deploying to Backend
+          command: eb deploy todo-nuxt-rails-dev --timeout 20
+          working_directory: todo-api
+          no_output_timeout: 20m
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - deploy:
+          filters:
+            branches:
+              only:
+                - elastic-beanstalk
