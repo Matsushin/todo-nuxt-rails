@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root to: 'health#index'
 
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   namespace :api do

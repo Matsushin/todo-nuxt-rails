@@ -1,12 +1,3 @@
-GIT
-  remote: https://github.com/samnang/active-elastic-job.git
-  revision: db55463b46e9ea0a66c33d5e81d602fda9289243
-  branch: upgrade_to_aws_sdk_3
-  specs:
-    active_elastic_job (2.0.1)
-      aws-sdk-sqs (~> 1)
-      rails (>= 4.2)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -301,7 +292,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_elastic_job!
   active_interaction
   annotate
   api-pagination
