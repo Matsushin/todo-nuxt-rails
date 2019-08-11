@@ -1,4 +1,4 @@
-class SendTestMail < ApplicationJob
+class SendTestMailJob < ApplicationJob
   def perform
     logger.info('Run SendTestMail')
   end

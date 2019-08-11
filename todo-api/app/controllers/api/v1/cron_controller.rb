@@ -3,12 +3,12 @@ class Api::V1::CronController < Api::V1::ApplicationController
   before_action :authorize_worker
 
   def send_test_mail_job
-    SendTestMail.perform_later
+    SendTestMailJob.perform_later
     head :ok
   end
 
   def test_batch_job
-    TestBatch.perform_now
+    TestBatchJob.perform_now
     head :ok
   end
 
