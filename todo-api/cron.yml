@@ -1,0 +1,9 @@
+version: 1
+cron:
+  - name: "SendTestMail"
+    url: "/api/v1/cron/send_test_mail_job"
+    schedule: "0,30 * * * *"
+
+  - name: "TestBatch"
+    url: "/api/v1/cron/test_batch_job"
+    schedule: "0,30 * * * *"
