@@ -1,0 +1,4 @@
+concurrency: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+queues:
+  - [todo_default.fifo, 1]

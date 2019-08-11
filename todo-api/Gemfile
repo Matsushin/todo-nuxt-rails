@@ -20,6 +20,9 @@ gem 'rails_admin'
 gem 'rails_admin-i18n'
 gem 'rack-cors'
 gem 'pundit'
+gem 'shoryuken'
+gem 'active_elastic_job', github: 'samnang/active-elastic-job', branch: 'upgrade_to_aws_sdk_3'
+gem 'aws-sdk-sqs'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

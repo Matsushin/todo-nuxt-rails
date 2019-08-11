@@ -60,7 +60,7 @@ Rails.application.configure do
   # config.cache_store = :mem_cache_store
 
   # Use a real queuing backend for Active Job (and separate queues per environment)
-  # config.active_job.queue_adapter     = :resque
+  config.active_job.queue_adapter     = :shoryuken
   # config.active_job.queue_name_prefix = "todo-api_#{Rails.env}"
 
   config.action_mailer.perform_caching = false
@@ -91,4 +91,18 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  config.action_mailer.default_url_options = { host: 'test.com' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.smtp_settings = {
+      address:        ENV['SMTP_ENDPOINT'],
+      port:           587,
+      authentication: :plain,
+      user_name:      ENV['SMTP_USERNAME'],
+      password:       ENV['SMTP_PASSWORD'],
+      domain:         ENV['SMTP_DOMAIN']
+  }
+
+  config.action_mailer.deliver_later_queue_name = ENV['AWS_DEFAULT_SQS']
 end

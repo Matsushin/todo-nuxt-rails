@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/samnang/active-elastic-job.git
+  revision: db55463b46e9ea0a66c33d5e81d602fda9289243
+  branch: upgrade_to_aws_sdk_3
+  specs:
+    active_elastic_job (2.0.1)
+      aws-sdk-sqs (~> 1)
+      rails (>= 4.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -49,6 +58,18 @@ GEM
       rake (>= 10.4, < 13.0)
     api-pagination (4.8.2)
     arel (9.0.0)
+    aws-eventstream (1.0.3)
+    aws-partitions (1.199.0)
+    aws-sdk-core (3.62.0)
+      aws-eventstream (~> 1.0, >= 1.0.2)
+      aws-partitions (~> 1.0)
+      aws-sigv4 (~> 1.1)
+      jmespath (~> 1.0)
+    aws-sdk-sqs (1.20.0)
+      aws-sdk-core (~> 3, >= 3.61.1)
+      aws-sigv4 (~> 1.1)
+    aws-sigv4 (1.1.0)
+      aws-eventstream (~> 1.0, >= 1.0.2)
     bcrypt (3.1.13)
     bindex (0.8.1)
     bootsnap (1.4.4)
@@ -119,6 +140,7 @@ GEM
       concurrent-ruby (~> 1.0)
     jbuilder (2.9.1)
       activesupport (>= 4.2.0)
+    jmespath (1.4.0)
     jquery-rails (4.3.5)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
@@ -243,6 +265,10 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    shoryuken (5.0.1)
+      aws-sdk-core (>= 2)
+      concurrent-ruby
+      thor
     spring (2.1.0)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -275,9 +301,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_elastic_job!
   active_interaction
   annotate
   api-pagination
+  aws-sdk-sqs
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.1.0)
   byebug
@@ -297,6 +325,7 @@ DEPENDENCIES
   rspec-rails
   rspec_junit_formatter
   sass-rails (~> 5.0)
+  shoryuken
   spring
   spring-watcher-listen (~> 2.0.0)
   uglifier (>= 1.3.0)
