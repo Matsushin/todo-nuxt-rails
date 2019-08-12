@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       get 'authencity_token', to: 'authencity_tokens#create'
 
       post 'cron/send_test_mail_job', to: 'cron#send_test_mail_job'
-      post 'cron/test_batch_job', to: 'cron#test_batch_job '
+      post 'cron/test_batch_job', to: 'cron#test_batch_job'
     end
   end
 end
