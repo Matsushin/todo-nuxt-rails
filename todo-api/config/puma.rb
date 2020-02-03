@@ -7,18 +7,6 @@
 threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }
 threads threads_count, threads_count
 
-before_fork do
-  PumaWorkerKiller.config do |config|
-    config.ram           = 1024
-    config.frequency     = 5
-    config.percent_usage = 0.98
-    config.rolling_restart_frequency = 12 * 3600
-    config.reaper_status_logs = true
-    config.pre_term = -> (worker) { puts "Worker #{worker.inspect} being killed" }
-  end
-  PumaWorkerKiller.start
-end
-
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
 #
 port        ENV.fetch("PORT") { 3000 }
@@ -33,7 +21,7 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 # Workers do not work on JRuby or Windows (both of which do not support
 # processes).
 #
-workers ENV.fetch("WEB_CONCURRENCY") { 2 }
+# workers ENV.fetch("WEB_CONCURRENCY") { 2 }
 
 # Use the `preload_app!` method when specifying a `workers` number.
 # This directive tells Puma to first boot the application and load code
