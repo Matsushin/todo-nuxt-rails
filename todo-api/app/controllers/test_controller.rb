@@ -16,8 +16,8 @@ class TestController < ApplicationController
         1000.times do |count|
           index = user.tasks.count + count
           user.tasks.create!(
-              title: "#{user.username}_タスク#{index}",
-              body: "本文#{index}"
+              title: "#{user.username}_task#{index}",
+              body: "body#{index}"
           )
         end
       end
