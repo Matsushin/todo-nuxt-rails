@@ -65,8 +65,8 @@ jobs:
           command: |
             sudo apt-get -y -qq update
             sudo apt-get install python-pip python-dev build-essential
-            pip install --upgrade pip
-            pip install pyYAML==3.13 six==1.11.0 requests==2.20.1 urllib3==1.24.1 awsebcli --upgrade
+            pip install pip==20.3.3
+            pip install awsebcli --upgrade
       - run:
           name: Deploying to Backend
           command: eb deploy todo-nuxt-rails-dev --timeout 20
