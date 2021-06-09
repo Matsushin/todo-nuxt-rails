@@ -2,8 +2,9 @@ require 'json'
 require 'open-uri'
 class EmailsController < ApplicationController
   def notice
+    email = params[:email] || ENV['TEST_MAIL'] || 'matsushin.dev@gmail.com'
     Rails::logger::debug('========= notice ==========')
-    TestMailer.notify.deliver_now
+    TestMailer.notify(email).deliver_now
     head :ok
   end
 

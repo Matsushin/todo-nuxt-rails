@@ -1,11 +1,11 @@
 class TestMailer < ApplicationMailer
-  def notify
+  def notify(email)
     headers[:mail_reservation_id] = 10
     headers[:user_id] = 20
     mail(
         subject: 'テストメール',
-        to: ENV['TEST_MAIL'] || 'matsushin.dev@gmail.com',
-        from: 'matsushin.dev@gmail.com'
+        to: email,
+        from: 'info@matsushin-dev.net'
     )
   end
 end
