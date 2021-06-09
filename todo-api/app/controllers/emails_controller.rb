@@ -1,6 +1,8 @@
 require 'json'
 require 'open-uri'
 class EmailsController < ApplicationController
+  protect_from_forgery with: :null_session
+
   def notice
     email = params[:email] || ENV['TEST_MAIL'] || 'matsushin.dev@gmail.com'
     Rails::logger::debug('========= notice ==========')
