@@ -4,6 +4,7 @@ class EmailsController < ApplicationController
   def notice
     Rails::logger::debug('========= notice ==========')
     TestMailer.notify.deliver_now
+    head :ok
   end
 
   def create

@@ -4,7 +4,7 @@ class TestMailer < ApplicationMailer
     headers[:user_id] = 20
     mail(
         subject: 'テストメール',
-        to: ENV['TEST_MAIL'],
+        to: ENV['TEST_MAIL'] || 'matsushin.dev@gmail.com',
         from: 'matsushin.dev@gmail.com'
     )
   end
