@@ -64,9 +64,12 @@ jobs:
           working_directory: /
           command: |
             sudo apt-get -y -qq update
-            sudo apt-get install python3-pip python3-dev build-essential
-            sudo pip3 install pip --upgrade
-            sudo pip3 install awsebcli --upgrade
+            sudo apt-get install python3.7 build-essential
+            wget https://bootstrap.pypa.io/get-pip.py
+            sudo python3.7 get-pip.py
+            sudo python3.7 -m pip install --upgrade pip setuptools wheel
+            sudo python3.7 -m pip install pipenv
+            sudo pip install awsebcli --upgrade
       - run:
           name: Deploying to Backend
           command: eb deploy todo-nuxt-rails-dev --timeout 20
