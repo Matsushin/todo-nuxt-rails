@@ -86,10 +86,10 @@ workflows:
   version: 2
   build_and_deploy:
     jobs:
-      - build_and_test
+      #- build_and_test
       - deploy:
-          requires:
-            - build_and_test
+#          requires:
+#            - build_and_test
           filters:
             branches:
               only:

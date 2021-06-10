@@ -17,11 +17,11 @@ class EmailsController < ApplicationController
     data = JSON.parse(request.raw_post)
     Rails::logger::debug(data)
 
-    if data['SubscribeURL'].present?
-      Rails::logger::debug('========= open ==========')
-      open(data['SubscribeURL'])
-    else
-      Rails::logger::debug('========= subscribed ==========')
-    end
+    # if data['SubscribeURL'].present?
+    #   Rails::logger::debug('========= open ==========')
+    #   open(data['SubscribeURL'])
+    # else
+    #   Rails::logger::debug('========= subscribed ==========')
+    # end
   end
 end
