@@ -5,7 +5,7 @@ class TestMailer < ApplicationMailer
     mail(
         subject: 'テストメール',
         to: email,
-        from: 'info@matsushin-dev.net'
+        from: 'no-reply@matsushin-dev.net'
     )
   end
 end

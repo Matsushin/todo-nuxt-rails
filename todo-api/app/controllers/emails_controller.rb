@@ -14,6 +14,13 @@ class EmailsController < ApplicationController
     # bounce_mail受け取り
     Rails::logger::debug('===================')
     Rails::logger::debug(request.raw_post)
-    Rails::logger::debug(JSON.parse(request.raw_post))
-  end
+    data = JSON.parse(request.raw_post)
+    Rails::logger::debug(data)
+
+    if data['SubscribeURL'].present?
+      Rails::logger::debug('========= open ==========')
+      open(data['SubscribeURL'])
+    else
+      Rails::logger::debug('========= subscribed ==========')
+    end
 end
