@@ -23,4 +23,5 @@ class EmailsController < ApplicationController
     else
       Rails::logger::debug('========= subscribed ==========')
     end
+  end
 end
