@@ -55,17 +55,16 @@ jobs:
                             --format progress \
           working_directory: todo-api
   deploy:
-    machine:
-      image: circleci/classic:edge
+    docker:
+      - image: circleci/python:3.7.7
     steps:
       - checkout
       - run:
           name: Installing deployment dependencies
           working_directory: /
           command: |
-            sudo apt-get -y -qq update
-            sudo apt-get install python3-pip python3-dev build-essential
-            sudo pip3 install awsebcli
+            sudo pip install --upgrade setuptools
+            sudo pip install awsebcli --upgrade
       - run:
           name: Deploying to Backend
           command: eb deploy todo-nuxt-rails-dev --timeout 20
