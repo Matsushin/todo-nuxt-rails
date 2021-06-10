@@ -64,6 +64,7 @@ jobs:
           working_directory: /
           command: |
             sudo pip install --upgrade setuptools
+            sudo pip install pip==21.1.2
             sudo pip install awsebcli --upgrade
       - run:
           name: Deploying to Backend
