@@ -1,7 +1,7 @@
-#require 'json'
-#require 'open-uri'
+require 'json'
+require 'open-uri'
 class EmailsController < ApplicationController
-  #protect_from_forgery with: :null_session
+  protect_from_forgery with: :null_session
 
   def notice
     email = params[:email] || ENV['TEST_MAIL'] || 'matsushin.dev@gmail.com'
@@ -14,14 +14,14 @@ class EmailsController < ApplicationController
     # bounce_mail受け取り
     Rails::logger::debug('===================')
     Rails::logger::debug(request.raw_post)
-    #data = JSON.parse(request.raw_post)
-    #Rails::logger::debug(data)
+    data = JSON.parse(request.raw_post)
+    Rails::logger::debug(data)
 
-    # if data['SubscribeURL'].present?
-    #   Rails::logger::debug('========= open ==========')
-    #   open(data['SubscribeURL'])
-    # else
-    #   Rails::logger::debug('========= subscribed ==========')
-    # end
+    if data['SubscribeURL'].present?
+      Rails::logger::debug('========= open ==========')
+      open(data['SubscribeURL'])
+    else
+      Rails::logger::debug('========= subscribed ==========')
+    end
   end
 end
