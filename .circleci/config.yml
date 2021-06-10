@@ -65,8 +65,8 @@ jobs:
           command: |
             sudo apt-get -y -qq update
             sudo apt-get install python3-pip python3-dev build-essential
-            pip install pip==20.3.4
-            pip install awsebcli --upgrade
+            pip3 install pip==20.3.4
+            pip3 install awsebcli --upgrade
       - run:
           name: Deploying to Backend
           command: eb deploy todo-nuxt-rails-dev --timeout 20
