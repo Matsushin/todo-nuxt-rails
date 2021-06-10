@@ -65,7 +65,7 @@ jobs:
           command: |
             sudo apt-get -y -qq update
             sudo apt-get install python-pip python-dev build-essential
-            pip install pip==20.3.3
+            pip install pip==20.3.4
             pip install awsebcli --upgrade
       - run:
           name: Deploying to Backend
