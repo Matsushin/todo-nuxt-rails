@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root to: 'health#index'
   resources :emails, only: %i[create] do
     get :notice, on: :collection
+    post :create2, on: :collection
   end
 
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
