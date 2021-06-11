@@ -27,7 +27,23 @@ class EmailsController < ApplicationController
 
   def create2
     # bounce_mail受け取り
-    Rails::logger::debug('===================')
+    Rails::logger::debug('========= create2 ==========')
+    Rails::logger::debug(request.raw_post)
+    data = JSON.parse(request.raw_post)
+    Rails::logger::debug(data)
+
+    if data['SubscribeURL'].present?
+      Rails::logger::debug('========= open ==========')
+      open(data['SubscribeURL'])
+    else
+      Rails::logger::debug('========= subscribed ==========')
+    end
+    head :ok
+  end
+
+  def create2
+    # bounce_mail受け取り
+    Rails::logger::debug('========= create3 ==========')
     Rails::logger::debug(request.raw_post)
     data = JSON.parse(request.raw_post)
     Rails::logger::debug(data)
