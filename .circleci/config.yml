@@ -56,7 +56,7 @@ jobs:
           working_directory: todo-api
   deploy:
     docker:
-      - image: circleci/python:3.7.7
+      - image: circleci/python:stretch
     steps:
       - checkout
       - run:
