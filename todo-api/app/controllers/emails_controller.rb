@@ -41,7 +41,7 @@ class EmailsController < ApplicationController
     head :ok
   end
 
-  def create2
+  def create3
     # bounce_mail受け取り
     Rails::logger::debug('========= create3 ==========')
     Rails::logger::debug(request.raw_post)
