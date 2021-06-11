@@ -63,9 +63,9 @@ jobs:
           name: Installing deployment dependencies
           working_directory: /
           command: |
-            sudo pip install --upgrade setuptools
-            sudo pip install pip==21.1.2
-            sudo pip install awsebcli --upgrade
+            pip install --upgrade setuptools
+            pip install pip==21.1.2
+            pip install awsebcli --upgrade
       - run:
           name: Deploying to Backend
           command: eb deploy todo-nuxt-rails-dev --timeout 20
