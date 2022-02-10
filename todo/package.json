@@ -22,7 +22,7 @@
     "cookie-universal-nuxt": "^2.0.16",
     "cross-env": "^5.2.0",
     "element-ui": "^2.4.11",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "nuxt": "^2.4.0",
     "sass-loader": "^7.1.0"
   },
